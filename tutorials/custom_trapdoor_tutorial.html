@@ -1,0 +1,984 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Custom Trapdoor</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+  body {
+    font-family: 'Inter', sans-serif;
+  }
+  /* Specific styles for the Return button */
+  button.return-btn {
+    background-color: #6a9c4a;
+    color: black;
+    font-weight: 800;
+    font-size: 1.25rem; /* text-xl */
+    border-radius: 0.375rem; /* rounded */
+    padding-left: 1.5rem; /* px-6 */
+    padding-right: 1.5rem;
+    padding-top: 0.5rem; /* py-2 */
+    padding-bottom: 0.5rem;
+    align-self: center;
+  }
+</style>
+</head>
+<body class="bg-[#d9d9d9] m-0 p-0">
+  <div class="flex min-h-screen">
+    <!-- Left sidebar -->
+    <aside class="w-60 border border-black bg-white flex flex-col justify-between p-6">
+      <div>
+        <h2 class="font-extrabold text-2xl mb-4 text-center">Parts</h2>
+        <nav class="flex flex-col space-y-2 text-lg font-normal text-black text-center">
+          <p><a href="#block">Block JSON</a></p>
+          <p><a href="#script">Script API</a></p>
+          <p><a href="#model">Block Model</a></p>
+        </nav>
+      </div>
+      <button><a href="./../tutorials.html">Return</a></button>
+    </aside>
+
+    <!-- Main content -->
+    <div class="flex-1 p-10">
+      <h1 class="font-extrabold text-5xl mb-4">Custom Trapdoor</h1>
+      <p class="text-lg mb-8 max-w-4xl">Trapdoors are versatile blocks that serve well as parts of doors, fences, decorations, and, well — as trapdoors! It's no wonder you want to make your own to add to Minecraft's collection. Here's how it's done:</p>
+      <br>
+	  <h2 class="font-extrabold text-3xl mb-4" id="block">Block JSON</h2>
+      <p class="text-lg mb-4 max-w-4xl">This is a sample Minecraft Bedrock Edition BLock JSON code snippet for your custom trapdoor. It demonstrates how to register a block and handle its interaction events.</p>
+      <div class="max-w-4xl border border-black">
+        <div class="flex justify-between items-center bg-[#c4c4c4] px-4 py-2 text-lg font-normal">
+          <span>BP/blocks/custom_trapdoor.json</span>
+          <button id="copyBtn" class="border border-black rounded px-3 py-1 font-mono text-base">COPY</button>
+        </div>
+        <pre id="codeBlock" class="bg-[#7f7f7f] text-black text-[1.25rem] font-mono h-48 overflow-auto p-4 select-text">
+          {
+            "format_version": "1.21.70",
+            "minecraft:block": {
+              "description": {
+                "identifier": "template:custom_trapdoor",
+                "menu_category": {
+                  "category": "construction",
+                  "group": "minecraft:itemGroup.name.trapdoor",
+                  "is_hidden_in_commands": false
+                },
+                "states": {
+                  "template:custom_trapdoor_bottom_states": [
+                    "close",
+                    "open"
+                  ],
+                  "template:custom_trapdoor_top_states": [
+                    "close",
+                    "open"
+                  ],
+                  "template:custom_trapdoor_mining_speeds": [
+                    "default",
+                    "wooden",
+                    "stone",
+                    "iron",
+                    "diamond",
+                    "netherite",
+                    "golden"
+                  ]
+                },
+                "traits": {
+                  "minecraft:placement_direction": {
+                    "enabled_states": [
+                      "minecraft:cardinal_direction"
+                    ],
+                    "y_rotation_offset": 180
+                  },
+                  "minecraft:placement_position": {
+                    "enabled_states": [
+                      "minecraft:vertical_half"
+                    ]
+                  }
+                }
+              },
+              "components": {
+                "minecraft:collision_box": {
+                  "origin": [
+                    -8,
+                    0,
+                    -8
+                  ],
+                  "size": [
+                    16,
+                    3,
+                    16
+                  ]
+                },
+                "minecraft:custom_components": [
+                  "template:custom_trapdoor_interact"
+                ],
+                "minecraft:destructible_by_explosion": {
+                  "explosion_resistance": 3
+                },
+                "minecraft:destructible_by_mining": {
+                  "seconds_to_destroy": 4.5
+                },
+                "minecraft:geometry": {
+                  "bone_visibility": {
+                    "bottom_closed": true,
+                    "bottom_opened": false,
+                    "top_closed": false,
+                    "top_opened": false
+                  },
+                  "identifier": "geometry.trapdoor"
+                },
+                "minecraft:loot": "loot_tables/custom_trapdoor_loot.json",
+                "minecraft:material_instances": {
+                  "*": {
+                    "ambient_occlusion": true,
+                    "face_dimming": true,
+                    "render_method": "alpha_test_single_sided",
+                    "texture": "custom_trapdoor"
+                  },
+                  "up": {
+                    "ambient_occlusion": true,
+                    "face_dimming": true,
+                    "render_method": "alpha_test_single_sided",
+                    "texture": "custom_trapdoor"
+                  },
+                  "down": {
+                    "ambient_occlusion": true,
+                    "face_dimming": true,
+                    "render_method": "alpha_test_single_sided",
+                    "texture": "custom_trapdoor"
+                  }
+                },
+                "minecraft:selection_box": {
+                  "origin": [
+                    -8,
+                    0,
+                    -8
+                  ],
+                  "size": [
+                    16,
+                    3,
+                    16
+                  ]
+                }
+              },
+              "permutations": [
+                {
+                  "condition": "query.block_state ('template:custom_trapdoor_bottom_states') == 'close' && query.block_state ('minecraft:vertical_half') == 'bottom'",
+                  "components": {
+                    "minecraft:collision_box": {
+                      "origin": [
+                        -8,
+                        0,
+                        -8
+                      ],
+                      "size": [
+                        16,
+                        3,
+                        16
+                      ]
+                    },
+                    "minecraft:geometry": {
+                      "bone_visibility": {
+                        "bottom_closed": true,
+                        "bottom_opened": false,
+                        "top_closed": false,
+                        "top_opened": false
+                      },
+                      "identifier": "geometry.trapdoor"
+                    },
+                    "minecraft:selection_box": {
+                      "origin": [
+                        -8,
+                        0,
+                        -8
+                      ],
+                      "size": [
+                        16,
+                        3,
+                        16
+                      ]
+                    }
+                  }
+                },
+                {
+                  "condition": "query.block_state ('template:custom_trapdoor_bottom_states') == 'open' && query.block_state ('minecraft:vertical_half') == 'bottom'",
+                  "components": {
+                    "minecraft:collision_box": {
+                      "origin": [
+                        -8,
+                        0,
+                        5
+                      ],
+                      "size": [
+                        16,
+                        16,
+                        3
+                      ]
+                    },
+                    "minecraft:geometry": {
+                      "bone_visibility": {
+                        "bottom_closed": false,
+                        "bottom_opened": true,
+                        "top_closed": false,
+                        "top_opened": false
+                      },
+                      "identifier": "geometry.trapdoor"
+                    },
+                    "minecraft:selection_box": {
+                      "origin": [
+                        -8,
+                        0,
+                        5
+                      ],
+                      "size": [
+                        16,
+                        16,
+                        3
+                      ]
+                    }
+                  }
+                },
+                {
+                  "condition": "query.block_state ('template:custom_trapdoor_top_states') == 'close' && query.block_state ('minecraft:vertical_half') == 'top'",
+                  "components": {
+                    "minecraft:collision_box": {
+                      "origin": [
+                        -8,
+                        13,
+                        -8
+                      ],
+                      "size": [
+                        16,
+                        3,
+                        16
+                      ]
+                    },
+                    "minecraft:geometry": {
+                      "bone_visibility": {
+                        "bottom_closed": false,
+                        "bottom_opened": false,
+                        "top_closed": true,
+                        "top_opened": false
+                      },
+                      "identifier": "geometry.trapdoor"
+                    },
+                    "minecraft:selection_box": {
+                      "origin": [
+                        -8,
+                        13,
+                        -8
+                      ],
+                      "size": [
+                        16,
+                        3,
+                        16
+                      ]
+                    }
+                  }
+                },
+                {
+                  "condition": "query.block_state ('template:custom_trapdoor_top_states') == 'open' && query.block_state ('minecraft:vertical_half') == 'top'",
+                  "components": {
+                    "minecraft:collision_box": {
+                      "origin": [
+                        -8,
+                        0,
+                        5
+                      ],
+                      "size": [
+                        16,
+                        16,
+                        3
+                      ]
+                    },
+                    "minecraft:geometry": {
+                      "bone_visibility": {
+                        "bottom_closed": false,
+                        "bottom_opened": false,
+                        "top_closed": false,
+                        "top_opened": true
+                      },
+                      "identifier": "geometry.trapdoor"
+                    },
+                    "minecraft:selection_box": {
+                      "origin": [
+                        -8,
+                        0,
+                        5
+                      ],
+                      "size": [
+                        16,
+                        16,
+                        3
+                      ]
+                    }
+                  }
+                },
+                {
+                  "condition": "query.block_state ('minecraft:cardinal_direction') == 'north'",
+                  "components": {
+                    "minecraft:transformation": {
+                      "rotation": [
+                        0,
+                        0,
+                        0
+                      ]
+                    }
+                  }
+                },
+                {
+                  "condition": "query.block_state ('minecraft:cardinal_direction') == 'west'",
+                  "components": {
+                    "minecraft:transformation": {
+                      "rotation": [
+                        0,
+                        90,
+                        0
+                      ]
+                    }
+                  }
+                },
+                {
+                  "condition": "query.block_state ('minecraft:cardinal_direction') == 'south'",
+                  "components": {
+                    "minecraft:transformation": {
+                      "rotation": [
+                        0,
+                        180,
+                        0
+                      ]
+                    }
+                  }
+                },
+                {
+                  "condition": "query.block_state ('minecraft:cardinal_direction') == 'east'",
+                  "components": {
+                    "minecraft:transformation": {
+                      "rotation": [
+                        0,
+                        -90,
+                        0
+                      ]
+                    }
+                  }
+                },
+                {
+                  "condition": "query.block_state ('template:custom_trapdoor_mining_speeds') == 'default'",
+                  "components": {
+                    "minecraft:destructible_by_mining": {
+                      "seconds_to_destroy": 4.5
+                    }
+                  }
+                },
+                {
+                  "condition": "query.block_state ('template:custom_trapdoor_mining_speeds') == 'wooden'",
+                  "components": {
+                    "minecraft:destructible_by_mining": {
+                      "seconds_to_destroy": 2.25
+                    }
+                  }
+                },
+                {
+                  "condition": "query.block_state ('template:custom_trapdoor_mining_speeds') == 'stone'",
+                  "components": {
+                    "minecraft:destructible_by_mining": {
+                      "seconds_to_destroy": 1.15
+                    }
+                  }
+                },
+                {
+                  "condition": "query.block_state ('template:custom_trapdoor_mining_speeds') == 'iron'",
+                  "components": {
+                    "minecraft:destructible_by_mining": {
+                      "seconds_to_destroy": 0.75
+                    }
+                  }
+                },
+                {
+                  "condition": "query.block_state ('template:custom_trapdoor_mining_speeds') == 'diamond'",
+                  "components": {
+                    "minecraft:destructible_by_mining": {
+                      "seconds_to_destroy": 0.6
+                    }
+                  }
+                },
+                {
+                  "condition": "query.block_state ('template:custom_trapdoor_mining_speeds') == 'netherite'",
+                  "components": {
+                    "minecraft:destructible_by_mining": {
+                      "seconds_to_destroy": 0.5
+                    }
+                  }
+                },
+                {
+                  "condition": "query.block_state ('template:custom_trapdoor_mining_speeds') == 'golden'",
+                  "components": {
+                    "minecraft:destructible_by_mining": {
+                      "seconds_to_destroy": 0.4
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        </pre>
+		</div>
+    <br>
+		<h2 class="font-extrabold text-3xl mb-4" id="script">Script API</h2>
+      <p class="text-lg mb-4 max-w-4xl">This is a sample Minecraft Bedrock Edition Script API code snippet for your custom trapdoor. It demonstrates how to register a block and handle its interaction events.</p>
+      <div class="max-w-4xl border border-black">
+        <div class="flex justify-between items-center bg-[#c4c4c4] px-4 py-2 text-lg font-normal">
+          <span>BP/scripts/custom_trapdoor_interact.js</span>
+          <button id="copyBtn" class="border border-black rounded px-3 py-1 font-mono text-base">COPY</button>
+        </div>
+        <pre id="codeBlock" class="bg-[#7f7f7f] text-black text-[1.25rem] font-mono h-48 overflow-auto p-4 select-text">
+          import { world } from "@minecraft/server";
+
+          const CustomTrapdoorInteractHandler = () => {
+              const CustomTrapdoorInteract = {
+                  onPlayerInteract({ block, dimension }) {
+                      const bottomInteractStates = block.permutation.getState('template:custom_trapdoor_bottom_states');
+                      const topInteractStates = block.permutation.getState('template:custom_trapdoor_top_states');
+                      const blockDirectionStates = block.permutation.getState('minecraft:placement_direction');
+                      const blockPositionStates = block.permutation.getState('minecraft:vertical_half');
+          
+                      switch (bottomInteractStates) {
+                          case 'close':
+                              block.setPermutation(block.permutation.withState('template:custom_trapdoor_bottom_states', 'open'));
+                              dimension.playSound("open.wooden_trapdoor", block.center());
+                              break;
+                          case 'open':
+                              block.setPermutation(block.permutation.withState('template:custom_trapdoor_bottom_states', 'close'));
+                              dimension.playSound("close.wooden_trapdoor", block.center());
+                              break;
+                      }
+          
+                      switch (topInteractStates) {
+                          case 'close':
+                              block.setPermutation(block.permutation.withState('template:custom_trapdoor_top_states', 'open'));
+                              break;
+                          case 'open':
+                              block.setPermutation(block.permutation.withState('template:custom_trapdoor_top_states', 'close'));
+                              break;
+                      }
+          
+                      switch (blockPositionStates) {
+                          case 'top':
+                              block.setPermutation(block.permutation.withState('minecraft:vertical_half', 'top'));
+                              break;
+                          case 'bottom':
+                              block.setPermutation(block.permutation.withState('minecraft:vertical_half', 'bottom'));
+                              break;
+                      }
+          
+                      switch (blockDirectionStates) {
+                          case 'north':
+                              block.setPermutation(block.permutation.withState('minecraft:placement_direction', 'north'));
+                              break;
+                          case 'east':
+                              block.setPermutation(block.permutation.withState('minecraft:placement_direction', 'east'));
+                              break;
+                          case 'west':
+                              block.setPermutation(block.permutation.withState('minecraft:placement_direction', 'west'));
+                              break;
+                          case 'south':
+                              block.setPermutation(block.permutation.withState('minecraft:placement_direction', 'south'));
+                              break;
+                      }
+                  }
+              };
+          
+              world.beforeEvents.worldInitialize.subscribe(({ blockComponentRegistry }) => {
+                  blockComponentRegistry.registerCustomComponent(
+                      "template:custom_trapdoor_interact",
+                      CustomTrapdoorInteract
+                  );
+              });
+          };
+          
+          CustomTrapdoorInteractHandler();
+        </pre>
+        </div>
+        <br>
+        <div class="max-w-4xl border border-black">
+        <div class="flex justify-between items-center bg-[#c4c4c4] px-4 py-2 text-lg font-normal">
+          <span>BP/scripts/custom_trapdoor_speed.js</span>
+          <button id="copyBtn" class="border border-black rounded px-3 py-1 font-mono text-base">COPY</button>
+        </div>
+        <pre id="codeBlock" class="bg-[#7f7f7f] text-black text-[1.25rem] font-mono h-48 overflow-auto p-4 select-text">
+          import { BlockPermutation, system, world } from "@minecraft/server";
+
+const CustomTrapdoorSpeedHandler = () => {
+    world.beforeEvents.itemUse.subscribe(({ itemStack, source: player }) => {
+        const itemID = itemStack?.typeId;
+
+        system.run(() => {
+            const BlockRaycast = player.getBlockFromViewDirection({ maxDistance: 8, includeLiquidBlocks: false });
+            const Block = BlockRaycast?.block;
+
+            if (Block && Block.permutation.matches("template:custom_trapdoor")) {
+                let axeTypes = Block.permutation.getState("template:custom_trapdoor_mining_speeds");
+                const bottomInteractStates = Block.permutation.getState('template:custom_trapdoor_bottom_states');
+                const topInteractStates = Block.permutation.getState('template:custom_trapdoor_top_states');
+                const blockDirectionStates = Block.permutation.getState('minecraft:placement_direction');
+                const blockPositionStates = Block.permutation.getState('minecraft:vertical_half');
+
+                switch (itemID) {
+                    default:
+                        axeTypes = "default";
+                        break;
+                    case "minecraft:wooden_axe":
+                        axeTypes = "wooden";
+                        break;
+                    case "minecraft:stone_axe":
+                        axeTypes = "stone";
+                        break;
+                    case "minecraft:iron_axe":
+                        axeTypes = "iron";
+                        break;
+                    case "minecraft:diamond_axe":
+                        axeTypes = "diamond";
+                        break;
+                    case "minecraft:netherite_axe":
+                        axeTypes = "netherite";
+                        break;
+                    case "minecraft:golden_axe":
+                        axeTypes = "golden";
+                        break;
+                }
+
+                Block.setPermutation(BlockPermutation.resolve("template:custom_trapdoor", {
+                    'template:custom_trapdoor_speeds': axeTypes,
+                    'template:custom_trapdoor_bottom_states': bottomInteractStates,
+                    'template:custom_trapdoor_top_states': topInteractStates,
+                    'minecraft:placement_direction': blockDirectionStates,
+                    'minecraft:vertical_half': blockPositionStates
+                }));
+            }
+        });
+    });
+};
+
+CustomTrapdoorSpeedHandler();
+        </pre>
+        </div>
+      <br>
+      <div class="max-w-4xl border border-black">
+        <div class="flex justify-between items-center bg-[#c4c4c4] px-4 py-2 text-lg font-normal">
+          <span>BP/scripts/tool_durabilities.js</span>
+          <button id="copyBtn" class="border border-black rounded px-3 py-1 font-mono text-base">COPY</button>
+        </div>
+        <pre id="codeBlock" class="bg-[#7f7f7f] text-black text-[1.25rem] font-mono h-48 overflow-auto p-4 select-text">
+          import { world } from "@minecraft/server";
+
+const ToolDurabilityHandler = () => {
+    world.afterEvents.playerBreakBlock.subscribe(eventData => {
+        const player = eventData.player;
+        const item = eventData.itemStackAfterBreak;
+        if (item?.hasTag("minecraft:is_axe")) {
+            const damage = item.getComponent("durability").damage;
+            const durability = item.getComponent("durability").maxDurability;
+            const inv = player.getComponent('inventory').container;
+            if (damage == durability) {
+                inv.setItem(player.selectedSlotIndex, null);
+            } else {
+                item.getComponent("durability").damage += 1;
+                inv.setItem(player.selectedSlotIndex, item);
+            }
+        }
+    })
+};
+
+ToolDurabilityHandler();
+        </pre>
+        </div>
+        <br>
+		<h2 class="font-extrabold text-3xl mb-4" id="model">Block Model</h2>
+      <p class="text-lg mb-4 max-w-4xl">This is a sample Minecraft Bedrock Edition Script API code snippet for your custom trapdoor. It demonstrates how to register a block and handle its interaction events.</p>
+      <div class="max-w-4xl border border-black">
+        <div class="flex justify-between items-center bg-[#c4c4c4] px-4 py-2 text-lg font-normal">
+          <span>RP/models/blocks/trapdoor.geo.json</span>
+          <button id="copyBtn" class="border border-black rounded px-3 py-1 font-mono text-base">COPY</button>
+        </div>
+        <pre id="codeBlock" class="bg-[#7f7f7f] text-black text-[1.25rem] font-mono h-48 overflow-auto p-4 select-text">
+          {
+            "format_version": "1.12.0",
+            "minecraft:geometry": [
+              {
+                "description": {
+                  "identifier": "geometry.trapdoor",
+                  "texture_width": 16,
+                  "texture_height": 16,
+                  "visible_bounds_width": 3,
+                  "visible_bounds_height": 2.5,
+                  "visible_bounds_offset": [
+                    0,
+                    0.75,
+                    0
+                  ]
+                },
+                "bones": [
+                  {
+                    "name": "bottom_opened",
+                    "pivot": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "cubes": [
+                      {
+                        "origin": [
+                          -8,
+                          0,
+                          5
+                        ],
+                        "size": [
+                          16,
+                          16,
+                          3
+                        ],
+                        "uv": {
+                          "north": {
+                            "uv": [
+                              0,
+                              0
+                            ],
+                            "uv_size": [
+                              16,
+                              16
+                            ]
+                          },
+                          "east": {
+                            "uv": [
+                              13,
+                              0
+                            ],
+                            "uv_size": [
+                              3,
+                              16
+                            ]
+                          },
+                          "south": {
+                            "uv": [
+                              0,
+                              0
+                            ],
+                            "uv_size": [
+                              16,
+                              16
+                            ]
+                          },
+                          "west": {
+                            "uv": [
+                              0,
+                              0
+                            ],
+                            "uv_size": [
+                              3,
+                              16
+                            ]
+                          },
+                          "up": {
+                            "uv": [
+                              16,
+                              3
+                            ],
+                            "uv_size": [
+                              -16,
+                              -3
+                            ]
+                          },
+                          "down": {
+                            "uv": [
+                              16,
+                              3
+                            ],
+                            "uv_size": [
+                              -16,
+                              -3
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "bottom_closed",
+                    "pivot": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "cubes": [
+                      {
+                        "origin": [
+                          -8,
+                          0,
+                          -8
+                        ],
+                        "size": [
+                          16,
+                          3,
+                          16
+                        ],
+                        "uv": {
+                          "north": {
+                            "uv": [
+                              0,
+                              0
+                            ],
+                            "uv_size": [
+                              16,
+                              3
+                            ]
+                          },
+                          "east": {
+                            "uv": [
+                              0,
+                              0
+                            ],
+                            "uv_size": [
+                              16,
+                              3
+                            ]
+                          },
+                          "south": {
+                            "uv": [
+                              0,
+                              0
+                            ],
+                            "uv_size": [
+                              16,
+                              3
+                            ]
+                          },
+                          "west": {
+                            "uv": [
+                              0,
+                              0
+                            ],
+                            "uv_size": [
+                              16,
+                              3
+                            ]
+                          },
+                          "up": {
+                            "uv": [
+                              16,
+                              16
+                            ],
+                            "uv_size": [
+                              -16,
+                              -16
+                            ]
+                          },
+                          "down": {
+                            "uv": [
+                              16,
+                              16
+                            ],
+                            "uv_size": [
+                              -16,
+                              -16
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "top_opened",
+                    "pivot": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "cubes": [
+                      {
+                        "origin": [
+                          -8,
+                          0,
+                          5
+                        ],
+                        "size": [
+                          16,
+                          16,
+                          3
+                        ],
+                        "uv": {
+                          "north": {
+                            "uv": [
+                              0,
+                              0
+                            ],
+                            "uv_size": [
+                              16,
+                              16
+                            ]
+                          },
+                          "east": {
+                            "uv": [
+                              13,
+                              0
+                            ],
+                            "uv_size": [
+                              3,
+                              16
+                            ]
+                          },
+                          "south": {
+                            "uv": [
+                              0,
+                              0
+                            ],
+                            "uv_size": [
+                              16,
+                              16
+                            ]
+                          },
+                          "west": {
+                            "uv": [
+                              0,
+                              0
+                            ],
+                            "uv_size": [
+                              3,
+                              16
+                            ]
+                          },
+                          "up": {
+                            "uv": [
+                              16,
+                              3
+                            ],
+                            "uv_size": [
+                              -16,
+                              -3
+                            ]
+                          },
+                          "down": {
+                            "uv": [
+                              16,
+                              16
+                            ],
+                            "uv_size": [
+                              -16,
+                              -3
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "name": "top_closed",
+                    "pivot": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "cubes": [
+                      {
+                        "origin": [
+                          -8,
+                          13,
+                          -8
+                        ],
+                        "size": [
+                          16,
+                          3,
+                          16
+                        ],
+                        "uv": {
+                          "north": {
+                            "uv": [
+                              0,
+                              0
+                            ],
+                            "uv_size": [
+                              16,
+                              3
+                            ]
+                          },
+                          "east": {
+                            "uv": [
+                              0,
+                              0
+                            ],
+                            "uv_size": [
+                              16,
+                              3
+                            ]
+                          },
+                          "south": {
+                            "uv": [
+                              0,
+                              0
+                            ],
+                            "uv_size": [
+                              16,
+                              3
+                            ]
+                          },
+                          "west": {
+                            "uv": [
+                              0,
+                              0
+                            ],
+                            "uv_size": [
+                              16,
+                              3
+                            ]
+                          },
+                          "up": {
+                            "uv": [
+                              16,
+                              16
+                            ],
+                            "uv_size": [
+                              -16,
+                              -16
+                            ]
+                          },
+                          "down": {
+                            "uv": [
+                              16,
+                              16
+                            ],
+                            "uv_size": [
+                              -16,
+                              -16
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        </pre>
+      </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const copyBtn = document.getElementById('copyBtn');
+  const codeBlock = document.getElementById('codeBlock');
+
+  copyBtn.addEventListener('click', () => {
+    const codeText = codeBlock.innerText.trim();
+    navigator.clipboard.writeText(codeText).then(() => {
+      copyBtn.textContent = 'COPIED';
+      setTimeout(() => {
+        copyBtn.textContent = 'COPY';
+      }, 2000);
+    }).catch(() => {
+      alert('Failed to copy code.');
+    });
+  });
+</script>
+</body>
+</html>

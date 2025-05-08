@@ -1,0 +1,143 @@
+.code-header {
+    display: flex
+;
+    align-items: center;
+    background-color: var(--bg-color);
+    margin-top: .5em;
+    padding: .5em 6em .5em .5em;
+    gap: .4em;
+    border: var(--border);
+    border-bottom: none;
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
+}
+* {
+    box-sizing: border-box;
+}
+* {
+    --accent-color: var(--light-accent-color);
+}
+*, *:before, *:after {
+    box-sizing: border-box;
+    word-wrap: break-word;
+    line-height: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    background: none;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    max-width: 100%;
+}
+user agent stylesheet
+header {
+    display: block;
+    unicode-bidi: isolate;
+}
+* {
+    --accent-color: var(--light-accent-color);
+}
+* {
+    --accent-color: var(--light-accent-color);
+}
+* {
+    --accent-color: var(--light-accent-color);
+}
+* {
+    --accent-color: var(--light-accent-color);
+}
+* {
+    --accent-color: var(--light-accent-color);
+}
+* {
+    --accent-color: var(--light-accent-color);
+}
+* {
+    --accent-color: var(--light-accent-color);
+}
+:root {
+    --docsearch-primary-color: #5468ff;
+    --docsearch-text-color: #1c1e21;
+    --docsearch-spacing: 12px;
+    --docsearch-icon-stroke-width: 1.4;
+    --docsearch-highlight-color: var(--docsearch-primary-color);
+    --docsearch-muted-color: #969faf;
+    --docsearch-container-background: rgba(101, 108, 133, .8);
+    --docsearch-logo-color: #5468ff;
+    --docsearch-modal-width: 560px;
+    --docsearch-modal-height: 600px;
+    --docsearch-modal-background: #f5f6f7;
+    --docsearch-modal-shadow: inset 1px 1px 0 0 hsla(0, 0%, 100%, .5), 0 3px 8px 0 #555a64;
+    --docsearch-searchbox-height: 56px;
+    --docsearch-searchbox-background: #ebedf0;
+    --docsearch-searchbox-focus-background: #fff;
+    --docsearch-searchbox-shadow: inset 0 0 0 2px var(--docsearch-primary-color);
+    --docsearch-hit-height: 56px;
+    --docsearch-hit-color: #444950;
+    --docsearch-hit-active-color: #fff;
+    --docsearch-hit-background: #fff;
+    --docsearch-hit-shadow: 0 1px 3px 0 #d4d9e1;
+    --docsearch-key-gradient: linear-gradient(-225deg, #d5dbe4, #f8f8f8);
+    --docsearch-key-shadow: inset 0 -2px 0 0 #cdcde6, inset 0 0 1px 1px #fff, 0 1px 2px 1px rgba(30, 35, 90, .4);
+    --docsearch-key-pressed-shadow: inset 0 -2px 0 0 #cdcde6, inset 0 0 1px 1px #fff, 0 1px 1px 0 rgba(30, 35, 90, .4);
+    --docsearch-footer-height: 44px;
+    --docsearch-footer-background: #fff;
+    --docsearch-footer-shadow: 0 -1px 0 0 #e0e3e8, 0 -3px 6px 0 rgba(69, 98, 155, .12);
+}
+:root {
+    background-color: var(--bg-color);
+    scrollbar-color: var(--border-color) transparent;
+    -webkit-text-size-adjust: 100%;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji";
+    line-height: 1.5;
+}
+:root {
+    --bg-color: rgb(243, 243, 243);
+    --light-bg-color: rgb(251, 251, 251);
+    --nav-bg-color: rgba(252, 252, 252, .8);
+    --nav-bg-blur: blur(16px);
+    --sidebar-visibility-transition-duration: .2s;
+    --header-height: 56px;
+    --sidebar-width: 270px;
+    --outline-width: 300px;
+    --border-radius: 10px;
+    --border-color: #e5e5e5;
+    --border: 1px solid var(--border-color);
+}
+:root {
+    --light-accent-color: #2979c4;
+    --dark-accent-color: #6aaff0;
+}
+* {
+    --accent-color: var(--light-accent-color);
+}
+*, *:before, *:after {
+    box-sizing: border-box;
+    word-wrap: break-word;
+    line-height: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    background: none;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    max-width: 100%;
+}
+*, *:before, *:after {
+    box-sizing: border-box;
+    word-wrap: break-word;
+    line-height: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    background: none;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    max-width: 100%;
+}

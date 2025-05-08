@@ -1,0 +1,80 @@
+* {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f5;
+    color: #2c3e50;
+    display: flex;
+  }
+  .sidebar {
+    width: 220px;
+    background-color: #ffffff;
+    height: 100vh;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+  }
+  .sidebar h2 {
+    font-size: 18px;
+    margin-top: 0;
+  }
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  .sidebar li {
+    margin: 10px 0;
+  }
+  .sidebar a {
+    text-decoration: none;
+    color: #3498db;
+  }
+  .content {
+    flex-grow: 1;
+    padding: 40px;
+  }
+  .doc-section {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+  }
+  h1 {
+    margin-top: 0;
+  }
+  .json-viewer {
+    background: #272822;
+    color: #f8f8f2;
+    padding: 15px;
+    border-radius: 5px;
+    font-family: monospace;
+    font-size: 14px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  button.copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #3498db;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  button.copy-btn:hover {
+    background: #2980b9;
+  }
+  .json-container {
+    margin-top: 20px;
+    cursor: pointer;
+    padding: 10px;
+    background-color: #3498db;
+    color: white;
+    border-radius: 4px;
+    text-align: center;
+  }
