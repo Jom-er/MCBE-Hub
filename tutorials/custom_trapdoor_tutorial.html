@@ -10,7 +10,6 @@
   body {
     font-family: 'Inter', sans-serif;
   }
-  /* Specific styles for the Return button */
   button.return-btn {
     background-color: #6a9c4a;
     color: black;
@@ -500,69 +499,6 @@
         </pre>
         </div>
         <br>
-        <div class="max-w-4xl border border-black">
-        <div class="flex justify-between items-center bg-[#c4c4c4] px-4 py-2 text-lg font-normal">
-          <span>BP/scripts/custom_trapdoor_speed.js</span>
-          <button id="copyBtn" class="border border-black rounded px-3 py-1 font-mono text-base">COPY</button>
-        </div>
-        <pre id="codeBlock" class="bg-[#7f7f7f] text-black text-[1.25rem] font-mono h-48 overflow-auto p-4 select-text">
-          import { BlockPermutation, system, world } from "@minecraft/server";
-
-const CustomTrapdoorSpeedHandler = () => {
-    world.beforeEvents.itemUse.subscribe(({ itemStack, source: player }) => {
-        const itemID = itemStack?.typeId;
-
-        system.run(() => {
-            const BlockRaycast = player.getBlockFromViewDirection({ maxDistance: 8, includeLiquidBlocks: false });
-            const Block = BlockRaycast?.block;
-
-            if (Block && Block.permutation.matches("template:custom_trapdoor")) {
-                let axeTypes = Block.permutation.getState("template:custom_trapdoor_mining_speeds");
-                const bottomInteractStates = Block.permutation.getState('template:custom_trapdoor_bottom_states');
-                const topInteractStates = Block.permutation.getState('template:custom_trapdoor_top_states');
-                const blockDirectionStates = Block.permutation.getState('minecraft:placement_direction');
-                const blockPositionStates = Block.permutation.getState('minecraft:vertical_half');
-
-                switch (itemID) {
-                    default:
-                        axeTypes = "default";
-                        break;
-                    case "minecraft:wooden_axe":
-                        axeTypes = "wooden";
-                        break;
-                    case "minecraft:stone_axe":
-                        axeTypes = "stone";
-                        break;
-                    case "minecraft:iron_axe":
-                        axeTypes = "iron";
-                        break;
-                    case "minecraft:diamond_axe":
-                        axeTypes = "diamond";
-                        break;
-                    case "minecraft:netherite_axe":
-                        axeTypes = "netherite";
-                        break;
-                    case "minecraft:golden_axe":
-                        axeTypes = "golden";
-                        break;
-                }
-
-                Block.setPermutation(BlockPermutation.resolve("template:custom_trapdoor", {
-                    'template:custom_trapdoor_speeds': axeTypes,
-                    'template:custom_trapdoor_bottom_states': bottomInteractStates,
-                    'template:custom_trapdoor_top_states': topInteractStates,
-                    'minecraft:placement_direction': blockDirectionStates,
-                    'minecraft:vertical_half': blockPositionStates
-                }));
-            }
-        });
-    });
-};
-
-CustomTrapdoorSpeedHandler();
-        </pre>
-        </div>
-      <br>
       <div class="max-w-4xl border border-black">
         <div class="flex justify-between items-center bg-[#c4c4c4] px-4 py-2 text-lg font-normal">
           <span>BP/scripts/tool_durabilities.js</span>
