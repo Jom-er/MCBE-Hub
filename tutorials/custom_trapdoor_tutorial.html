@@ -423,70 +423,6 @@
         </pre>
 		</div>
     <br>
-	    <h2 class="font-extrabold text-3xl mb-4" id="script">Script API</h2>
-      <p class="text-lg mb-4 max-w-4xl">This is a sample Minecraft Bedrock Edition Script API code snippet for your custom trapdoor. It demonstrates how to register a block and handle its mining speed events.</p>
-      <div class="max-w-4xl border border-black">
-        <div class="flex justify-between items-center bg-[#c4c4c4] px-4 py-2 text-lg font-normal">
-          <span>BP/scripts/custom_trapdoor_speeds.js</span>
-          <button id="copyBtn" class="border border-black rounded px-3 py-1 font-mono text-base">COPY</button>
-        </div>
-        <pre id="codeBlock" class="bg-[#7f7f7f] text-black text-[1.25rem] font-mono h-48 overflow-auto p-4 select-text">
-          import { BlockPermutation, system, world } from "@minecraft/server";
-
-const CustomTrapdoorSpeedsHandler = () => {
-    world.beforeEvents.itemUse.subscribe(({ itemStack, source: player }) => {
-        system.run(() => {
-            const itemID = itemStack?.typeId;
-            const blockRaycast = player.getBlockFromViewDirection({ maxDistance: 8, includeLiquidBlocks: false });
-            const targetBlock = blockRaycast?.block;
-
-            if (targetBlock && targetBlock.permutation.matches("template:custom_trapdoor")) {
-                const blockSpeeds = targetBlock.permutation.getState("template:custom_trapdoor_breaking_time");
-                const bottomStates = targetBlock.permutation.getState("template:custom_trapdoor_bottom_states");
-                const topStates = targetBlock.permutation.getState("template:custom_trapdoor_top_states");
-
-                let axeTypes;
-
-                switch (itemID) {
-                    default:
-                        axeTypes = "default";
-                        break;
-                    case "minecraft:wooden_axe":
-                        axeTypes = "wooden";
-                        break;
-                    case "minecraft:stone_axe":
-                        axeTypes = "stone";
-                        break;
-                    case "minecraft:iron_axe":
-                        axeTypes = "iron";
-                        break;
-                    case "minecraft:diamond_axe":
-                        axeTypes = "diamond";
-                        break;
-                    case "minecraft:netherite_axe":
-                        axeTypes = "netherite";
-                        break;
-                    case "minecraft:golden_axe":
-                        axeTypes = "golden";
-                        break;
-                }
-
-                const newPermutation = BlockPermutation.resolve("bwexp:log_maple", {
-                    'template:custom_trapdoor_breaking_time': blockSpeeds,
-                    'template:custom_trapdoor_bottom_states': bottomStates,
-		    'template:custom_trapdoor_top_states': topStates
-                });
-
-                targetBlock.setPermutation(newPermutation);
-            }
-        });
-    });
-};
-
-CustomTrapdoorSpeedsHandler();
-        </pre>
-        </div>
-        <br>
 		<h2 class="font-extrabold text-3xl mb-4" id="script">Script API</h2>
       <p class="text-lg mb-4 max-w-4xl">This is a sample Minecraft Bedrock Edition Script API code snippet for your custom trapdoor. It demonstrates how to register a block and handle its interaction events.</p>
       <div class="max-w-4xl border border-black">
@@ -590,6 +526,68 @@ const ToolDurabilityHandler = () => {
 };
 
 ToolDurabilityHandler();
+        </pre>
+        </div>
+        <br>
+	    <div class="max-w-4xl border border-black">
+        <div class="flex justify-between items-center bg-[#c4c4c4] px-4 py-2 text-lg font-normal">
+          <span>BP/scripts/custom_trapdoor_speeds.js</span>
+          <button id="copyBtn" class="border border-black rounded px-3 py-1 font-mono text-base">COPY</button>
+        </div>
+        <pre id="codeBlock" class="bg-[#7f7f7f] text-black text-[1.25rem] font-mono h-48 overflow-auto p-4 select-text">
+          import { BlockPermutation, system, world } from "@minecraft/server";
+
+const CustomTrapdoorSpeedsHandler = () => {
+    world.beforeEvents.itemUse.subscribe(({ itemStack, source: player }) => {
+        system.run(() => {
+            const itemID = itemStack?.typeId;
+            const blockRaycast = player.getBlockFromViewDirection({ maxDistance: 8, includeLiquidBlocks: false });
+            const targetBlock = blockRaycast?.block;
+
+            if (targetBlock && targetBlock.permutation.matches("template:custom_trapdoor")) {
+                const blockSpeeds = targetBlock.permutation.getState("template:custom_trapdoor_breaking_time");
+                const bottomStates = targetBlock.permutation.getState("template:custom_trapdoor_bottom_states");
+                const topStates = targetBlock.permutation.getState("template:custom_trapdoor_top_states");
+
+                let axeTypes;
+
+                switch (itemID) {
+                    default:
+                        axeTypes = "default";
+                        break;
+                    case "minecraft:wooden_axe":
+                        axeTypes = "wooden";
+                        break;
+                    case "minecraft:stone_axe":
+                        axeTypes = "stone";
+                        break;
+                    case "minecraft:iron_axe":
+                        axeTypes = "iron";
+                        break;
+                    case "minecraft:diamond_axe":
+                        axeTypes = "diamond";
+                        break;
+                    case "minecraft:netherite_axe":
+                        axeTypes = "netherite";
+                        break;
+                    case "minecraft:golden_axe":
+                        axeTypes = "golden";
+                        break;
+                }
+
+                const newPermutation = BlockPermutation.resolve("bwexp:log_maple", {
+                    'template:custom_trapdoor_breaking_time': blockSpeeds,
+                    'template:custom_trapdoor_bottom_states': bottomStates,
+		    'template:custom_trapdoor_top_states': topStates
+                });
+
+                targetBlock.setPermutation(newPermutation);
+            }
+        });
+    });
+};
+
+CustomTrapdoorSpeedsHandler();
         </pre>
         </div>
         <br>
